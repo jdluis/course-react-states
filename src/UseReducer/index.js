@@ -6,7 +6,15 @@ const SECURITY_CODE = "carol";
 function UseReducer({ name }) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 //Por convencion ya no usamos setState en el reducer, usamos dispatch.
-
+  //A lo siguiente se le llaman actualizadores de estado, es una forma mas declarativa de hacerlo.
+  const onConfirm = () => {dispatch({type: actionTypes.CONFIRM})}
+  const onError = () => {dispatch({type: actionTypes.ERROR})}
+  const onCheck = () => {dispatch({type: actionTypes.CHECK})}
+  const onDeleted = () => {dispatch({type: actionTypes.DELETE})}
+  const onReset = () => {dispatch({type: actionTypes.RESET})}
+  const onWrite = ({target: {value}}) => {
+    dispatch({type: actionTypes.WRITE, payload: value})
+};
 
   React.useEffect(() => {
     console.log("Empezando el efecto");
@@ -16,9 +24,9 @@ function UseReducer({ name }) {
         console.log("Haciendo la validacion");
 
         if (state.value === SECURITY_CODE) {
-          dispatch({type: actionTypes.CONFIRM}) //por convencion en mayus 
+            onConfirm(); //por convencion en mayus 
         } else {
-          dispatch({type: actionTypes.ERROR})
+            onError();
         }
 
         console.log("Terminando la validacion");
@@ -44,15 +52,8 @@ function UseReducer({ name }) {
         <input
           value={state.value}
           placeholder="Código de seguridad"
-          onChange={(e) => {
-            dispatch({type: actionTypes.WRITE, payload: e.target.value })
-          }}
-        />
-        <button
-          onClick={() => {
-            dispatch({type: actionTypes.CHECK})
-          }}
-        >
+          onChange={onWrite}/>
+        <button onClick={onCheck}>
           Comprobar
         </button>
       </div>
@@ -62,18 +63,10 @@ function UseReducer({ name }) {
       <React.Fragment>
 {/*         <Confirm setState={(patch) => setState({...state,...patch})}/>
  */}        <p>Are you sure?</p>
-            <button 
-                onClick={() => {
-                    dispatch({type: actionTypes.RESET})
-                }}
-            >
+            <button onClick={onReset}>
                 No, me arrepentí
             </button>
-            <button
-                onClick={() => {
-                    dispatch({type: actionTypes.DELETE})
-                }} 
-            >
+            <button onClick={onDeleted}>
                 Si, eliminar
             </button>
       </React.Fragment>
@@ -83,11 +76,7 @@ function UseReducer({ name }) {
       <React.Fragment>
       <p>Eliminado con exito</p>
 
-      <button
-                onClick={() => {
-                    dispatch({type: actionTypes.RESET})
-              }}
-            >
+      <button onClick={onReset}>
                 Recuperar UseState
             </button>
     </React.Fragment>
