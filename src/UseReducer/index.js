@@ -61,8 +61,7 @@ function UseReducer({ name }) {
   } else if (!!state.confirmed && !state.deleted) {
     return (
       <React.Fragment>
-{/*         <Confirm setState={(patch) => setState({...state,...patch})}/>
- */}        <p>Are you sure?</p>
+            <p>Are you sure?</p>
             <button onClick={onReset}>
                 No, me arrepentí
             </button>

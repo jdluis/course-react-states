@@ -1,6 +1,6 @@
 import React from "react";
-/* import { Confirm } from "../Confirm";
- */import { Loading } from "../Loading";
+import { Confirm } from "../Confirm";
+import { Loading } from "../Loading";
 
 const SECURITY_CODE = "carol";
 
@@ -112,22 +112,7 @@ function UseState({ name }) {
   } else if (!!state.confirmed && !state.deleted) {
     return (
       <React.Fragment>
-{/*         <Confirm setState={(patch) => setState({...state,...patch})}/>
- */}        <p>Are you sure?</p>
-            <button 
-                onClick={() => {
-                    onReset();
-                }}
-            >
-                No, me arrepentí
-            </button>
-            <button
-                onClick={() => {
-                    onDeleted();
-                }} 
-            >
-                Si, eliminar
-            </button>
+          <Confirm onReset={onReset} onDeleted = {onDeleted}/>
       </React.Fragment>
     );
   } else {

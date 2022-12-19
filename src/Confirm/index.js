@@ -1,24 +1,20 @@
 import React from 'react';
 import './index.css';
 
-function Confirm (setState) {
+function Confirm (props) {
     return (
         <div>
             <p>Are you sure?</p>
             <button 
                  onClick={() => 
-                    setState({
-                        confirmed: false,
-                    })
+                    props.onReset()
                 } 
             >
                 No
             </button>
             <button
                   onClick={() => 
-                    setState({
-                        deleted: true,
-                    })
+                    props.onDeleted()
                 } 
             >
                 Si, eliminar
