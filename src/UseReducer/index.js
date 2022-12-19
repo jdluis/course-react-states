@@ -16,9 +16,9 @@ function UseReducer({ name }) {
         console.log("Haciendo la validacion");
 
         if (state.value === SECURITY_CODE) {
-          dispatch({type: 'CONFIRM'}) //por convencion en mayus 
+          dispatch({type: actionTypes.CONFIRM}) //por convencion en mayus 
         } else {
-          dispatch({type: 'ERROR'})
+          dispatch({type: actionTypes.ERROR})
         }
 
         console.log("Terminando la validacion");
@@ -45,12 +45,12 @@ function UseReducer({ name }) {
           value={state.value}
           placeholder="Código de seguridad"
           onChange={(e) => {
-            dispatch({type: 'WRITE', payload: e.target.value })
+            dispatch({type: actionTypes.WRITE, payload: e.target.value })
           }}
         />
         <button
           onClick={() => {
-            dispatch({type: 'CHECK'})
+            dispatch({type: actionTypes.CHECK})
           }}
         >
           Comprobar
@@ -64,14 +64,14 @@ function UseReducer({ name }) {
  */}        <p>Are you sure?</p>
             <button 
                 onClick={() => {
-                    dispatch({type: 'RESET'})
+                    dispatch({type: actionTypes.RESET})
                 }}
             >
                 No, me arrepentí
             </button>
             <button
                 onClick={() => {
-                    dispatch({type: 'DELETE'})
+                    dispatch({type: actionTypes.DELETE})
                 }} 
             >
                 Si, eliminar
@@ -85,7 +85,7 @@ function UseReducer({ name }) {
 
       <button
                 onClick={() => {
-                    dispatch({type: 'RESET'})
+                    dispatch({type: actionTypes.RESET})
               }}
             >
                 Recuperar UseState
@@ -95,7 +95,6 @@ function UseReducer({ name }) {
   }
 }
 
-
 const initialState = {
     value: "",
     error: false,
@@ -104,36 +103,43 @@ const initialState = {
     confirmed: false,
 };
 
-
+const actionTypes = {
+    CONFIRM: 'CONFIRM',
+    ERROR: 'ERROR',
+    WRITE: 'WRITE',
+    CHECK: 'CHECK',
+    DELETE: 'DELETE',
+    RESET: 'RESET',
+}
 
 //3 forma preferida por el tutor, con OPTIONS en un objeto
 
 //ponemos el payload si es necesario, como en Write
 const reducerObject = (state, payload) => ({
-    'CONFIRM': {
+    [actionTypes.CONFIRM]: {
         ...state,
         error: false,
         loading: false,
         confirmed: true,
     },
-    'ERROR': {
+    [actionTypes.ERROR]: {
         ...state,
         error: true,
         loading:false,
     },
-    'CHECK': {
+    [actionTypes.CHECK]: {
         ...state,
         loading: true,
     },
-    'WRITE': {
+    [actionTypes.WRITE]: {
         ...state,
         value: payload,
     },
-    'DELETE': {
+    [actionTypes.DELETE]: {
         ...state,
         deleted: true,
     },
-    'RESET': {
+    [actionTypes.RESET]: {
         ...state,
         confirmed: false,
         deleted: false,
